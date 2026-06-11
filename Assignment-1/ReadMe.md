@@ -1,0 +1,1 @@
+Docker Compose simplifies the deployment of multi-container applications. In this project, you will containerize a simple web application and its database, then use Docker Compose to define and manage the deployment. 
