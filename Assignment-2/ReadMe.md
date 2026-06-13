@@ -1,24 +1,27 @@
 This project contain application are deployed in azure cloud 
-
-1. vnet
-
-2. vm
-
-3. CosomoDB mongodb with private access 
+VNET, VM, COSMODB mongodb (private access)
 
 For connectivity update the clinet/src/api/index.js baseurl and in the backend create a .env file with db connection string with portnumber, jwt token
 
-
-Application are exposed via pm2 
+Application are exposed via pm2 Host based application
 
 start application using a pm2 for that run following command
-        F.E: npm run build
-        npm install -g serve
-        npm install -g pm2
-        pm2 start "serve -s build -l 3000" --name fitness-fe
 
-       B.E: npm run build
-            pm2 start npm --name fitness-be -- start
+FrontEnd:
+
+npm run build
+        
+npm install -g serve
+        
+npm install -g pm2
+       
+pm2 start "serve -s build -l 3000" --name fitness-fe
+
+BackEnd:
+
+npm run build
+            
+pm2 start npm --name fitness-be -- start
 
 
 <img width="512" height="103" alt="image" src="https://github.com/user-attachments/assets/7c0adcb8-75a8-4e38-a8f5-92ca75706c6e" />
