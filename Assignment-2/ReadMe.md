@@ -125,6 +125,9 @@ server {
 }
 ```
 
+<img width="933" height="456" alt="image" src="https://github.com/user-attachments/assets/5f52b40f-30ad-4610-87f9-e3990a617aec" />
+
+
 
 
 
