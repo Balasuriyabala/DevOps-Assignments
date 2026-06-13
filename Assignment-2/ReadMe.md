@@ -83,22 +83,31 @@ root@food-vnet:/etc/nginx/sites-available# cat fitnessapp
 
 server {
     listen 80;
+    
     server_name fitnesscnapp.work.gd www.fitnesscnapp.work.gd;
+    
     return 301 https://$host$request_uri;
+
 }
+
 
 # HTTPS
 
 server {
+
     listen 443 ssl;
+    
     server_name fitnesscnapp.work.gd www.fitnesscnapp.work.gd;
 
     ssl_certificate /etc/ssl/fitnesscnapp/fitnesscnapp.work.gd.crt;
+    
     ssl_certificate_key /etc/ssl/fitnesscnapp/fitnesscnapp.work.gd.key;
+    
     ssl_trusted_certificate /etc/ssl/fitnesscnapp/ca.crt;
 
 
     ssl_protocols TLSv1.2 TLSv1.3;
+    
     ssl_ciphers HIGH:!aNULL:!MD5;
 
     # Frontend
