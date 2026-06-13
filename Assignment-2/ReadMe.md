@@ -29,15 +29,16 @@ pm2 start npm --name fitness-be -- start
 
 With Nginx:
 
+```nginx
 server {
     listen 80;
-    server_name <ip>; or dns name;
+    server_name <IP_OR_DNS_NAME>;
 
     access_log /var/log/nginx/myapp_access.log;
     error_log  /var/log/nginx/myapp_error.log;
 
     # FRONTEND STATIC FILES
-    root  /home/azureuser/FItnessTrack/client/build;
+    root /home/azureuser/FItnessTrack/client/build;
     index index.html;
 
     location / {
@@ -53,6 +54,8 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 }
+```
+
 
 IP INTO DNS:
 
@@ -79,35 +82,25 @@ nginx configuration:
 
 root@food-vnet:/etc/nginx/sites-available# cat fitnessapp
 
-# Redirect HTTP to HTTPS
+```nginx
 
+# Redirect HTTP to HTTPS
 server {
     listen 80;
-    
     server_name fitnesscnapp.work.gd www.fitnesscnapp.work.gd;
-    
     return 301 https://$host$request_uri;
-
 }
 
-
-# HTTPS
-
+# HTTPS server
 server {
-
     listen 443 ssl;
-    
     server_name fitnesscnapp.work.gd www.fitnesscnapp.work.gd;
 
     ssl_certificate /etc/ssl/fitnesscnapp/fitnesscnapp.work.gd.crt;
-    
     ssl_certificate_key /etc/ssl/fitnesscnapp/fitnesscnapp.work.gd.key;
-    
     ssl_trusted_certificate /etc/ssl/fitnesscnapp/ca.crt;
 
-
     ssl_protocols TLSv1.2 TLSv1.3;
-    
     ssl_ciphers HIGH:!aNULL:!MD5;
 
     # Frontend
@@ -130,6 +123,8 @@ server {
         proxy_cache_bypass $http_upgrade;
     }
 }
+```
+
 
 
 
