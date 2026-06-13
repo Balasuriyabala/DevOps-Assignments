@@ -80,13 +80,15 @@ nginx configuration:
 root@food-vnet:/etc/nginx/sites-available# cat fitnessapp
 
 # Redirect HTTP to HTTPS
+
 server {
     listen 80;
     server_name fitnesscnapp.work.gd www.fitnesscnapp.work.gd;
     return 301 https://$host$request_uri;
 }
 
-# HTTPS server
+# HTTPS
+
 server {
     listen 443 ssl;
     server_name fitnesscnapp.work.gd www.fitnesscnapp.work.gd;
