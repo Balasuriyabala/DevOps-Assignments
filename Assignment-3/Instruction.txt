@@ -1,0 +1,198 @@
+Azure 3-Tier Architecture Connectivity Testing Guide
+Objective
+
+Validate the complete traffic flow of our Azure 3-Tier Architecture:
+
+Internet
+    |
+Public Load Balancer
+    |
+-------------------------
+|                       |
+Web VM1            Web VM2
+(Nginx)            (Nginx)
+    |
+Internal Load Balancer
+    |
+-------------------------
+|                       |
+App VM1            App VM2
+(Private)          (Private)
+    |
+Azure MySQL Flexible Server (Private)
+
+Infrastructure Components
+Networking 
+Resource	                                               Purpose
+VNet	                                                   Private network for all resources
+Web Subnets	                                             Hosts Web VMs
+App Subnets	                                             Hosts App VMs
+Database Subnets	                                       Hosts MySQL Flexible Server
+NSGs Control                                             inbound/outbound traffic
+
+Compute 
+Resource	                                               Purpose
+Web VM	                                                 Nginx Reverse Proxy / Jump Host
+App VM	                                                 Application Server
+MySQL                                                    Flexible Server	Backend Database
+
+
+Load Balancers
+
+Public Load Balancer
+
+Receives internet traffic and forwards it to Web VMs.
+
+Browser
+   |
+Public LB
+   |
+Web VM
+
+Internal Load Balancer
+
+Receives traffic from Web VMs and forwards it to App VMs.
+
+Web VM
+   |
+Internal LB
+   |
+App VM
+
+
+Step 1: Create Resource Group
+
+Azure Portal → Resource Groups → Create
+
+Resource Group: 3tier-rg
+Region: Central India
+
+Step 2: Create VNet
+
+Azure Portal → Virtual Networks → Create
+
+Name: 3tier-vnet
+Address Space: 10.0.0.0/16
+
+Create 6 subnets:
+Subnet	CIDR
+web-subnet-1	10.0.1.0/24
+web-subnet-2	10.0.2.0/24
+app-subnet-1	10.0.3.0/24
+app-subnet-2	10.0.4.0/24
+db-subnet-1	10.0.5.0/24
+db-subnet-2	10.0.6.0/24
+
+Step 3: Create NSGs
+
+Create three NSGs:
+
+web-nsg
+app-nsg
+db-nsg
+
+
+Web NSG Rules
+Inbound:
+Priority	Port	Source
+100	80	Internet
+110	22	My IP
+Attach to:
+web-subnet-1
+web-subnet-2
+
+App NSG Rules
+Inbound:
+Priority	Port	Source
+100	3001	10.0.1.0/24
+110	3001	10.0.2.0/24
+Attach:
+app-subnet-1
+app-subnet-2
+
+DB NSG Rules
+Inbound:
+Priority	Port
+100	3306
+Source:
+10.0.3.0/24
+10.0.4.0/24
+Attach:
+db-subnet-1
+db-subnet-2
+
+
+Step 4: Create Public Load Balancer
+Azure Portal --> Load Balancer
+
+Create:
+
+Name: web-lb
+Type: Public
+SKU: Standard
+
+Frontend:
+Public IP
+Backend Pool:
+Web VM1
+Web VM2
+
+Health Probe: 80
+
+Load Balancer Rule:
+80 -> 80
+
+Step 5: Create Internal Load Balancer
+
+Create another LB
+
+Name: app-ilb
+Type: Internal
+Frontend IP:
+10.0.3.100
+Backend:
+App VM1
+App VM2
+Health Probe: 3001
+Load Balancer rule: 3001 -> 3001
+
+Step 6: Create Web VMs
+
+Create: web-vm1, web-vm2 (use created nsg in nic --> advance
+
+Subnet: web-subnet-1 ,web-subnet-2
+Public IP: YES
+
+Step 7: Create App VMs
+
+Create: app-vm1, app-vm2
+Subnet: app-subnet-1, app-subnet-2
+Public IP:NO
+
+Step 8: Create NAT Gateway
+
+Without NAT Gateway:
+npm install, apt-update not will happen because App VMs have no Internet.
+
+Create:
+
+nat-gateway
+Create Public IP:
+nat-pip
+Associate NAT Gateway to:
+app-subnet-1
+app-subnet-2
+
+note: but nobody can connect from Internet.
+
+Step 9: Create MySQL Flexible Server
+Azure Portal
+Azure Database for MySQL Flexible Server
+Configuration:
+Public Access: Disabled
+Private Access: Enabled
+
+use public face vm as jump host and ssh into app vm install or git clone the appliction.
+
+
+
