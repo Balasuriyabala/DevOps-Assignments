@@ -1,6 +1,8 @@
 # ARGOCD KUBERNETES MANIFEST FILES
 
-CASE:1 Using a kubernetes manifest files Argocd deployed a mysql db
+# CASE:1
+
+Using a kubernetes manifest files Argocd deployed a mysql db
 
 files are uploaded in seperate repo and folder, mysql workbench connection also succesfull we show deployed info and screenshots here
 
@@ -22,6 +24,22 @@ files are uploaded in seperate repo and folder, mysql workbench connection also 
 
 
 <img width="811" height="464" alt="image" src="https://github.com/user-attachments/assets/2e3bb915-3ad0-4838-ac42-07a07c099c26" />
+
+
+# CASE:2
+
+Deploying a mongodb and connection establishment
+
+<img width="491" height="142" alt="image" src="https://github.com/user-attachments/assets/a26073b5-5d35-492d-9d97-e76e17d6c6bd" />  
+
+
+<img width="756" height="325" alt="image" src="https://github.com/user-attachments/assets/dd27c551-04b9-43ab-a8a6-66f3b04f7bef" />
+
+
+<img width="431" height="380" alt="image" src="https://github.com/user-attachments/assets/ecd2b745-7d37-43e9-93b6-8dd0ba223d90" />
+
+
+
 
 
 
