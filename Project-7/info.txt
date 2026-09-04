@@ -1,7 +1,0 @@
-# THREE PILLAR OF OBSERVABILITY
-
-1. Metrics-[cpu usages, memory utilization, Request rate, Error rate, Response time] [Prometheus]
-
-2. Logs-[Error messages, User logins, Payment failed, file not found, service started] [Loki]
-
-3. Traces-[Request flow services, find slow services, identify bottelneck, end-end latency, Dependency breakdown] [Tempo]
